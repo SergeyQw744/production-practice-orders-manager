@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: products-service-2
+
+  # Подключение к БД
+  datasource:
+    url: jdbc:postgresql://postgres-products-service-2:5432/products-service-2-db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    # Отключаем поведение open in view, при котором hibernate-сессии продлеваются на обработку всего HTTP-запроса
+    open-in-view: false
+
+  # Путь к версиям БД
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/master-changelog.xml
+
+  # Kafka consumer
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: products-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+
+server:
+  port: 8081
+
+management:
+  # Включаем трейсинг
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0  # 1.0 = 100% запросов, 0.1 = 10%
+
+  # Настройки OTLP-экспортера
+  otlp:
+    tracing:
+      endpoint: http://jaeger:4318/v1/traces
+    metrics:
+      endpoint: http://jaeger:4318/v1/metrics
+
+  # Экспорт метрик
+  metrics:
+    export:
+      otlp:
+        enabled: true
+
+    # Открываем endpoint для проверки метрик (опционально)
+    endpoints:
+      web:
+        exposure:
+          include: health,info,prometheus
+
+logging:
+  level:
+    io.opentelemetry: DEBUG
+    io.micrometer: DEBUG
+    io.opentelemetry.exporter: TRACE
