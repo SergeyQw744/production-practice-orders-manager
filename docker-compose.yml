@@ -6,7 +6,7 @@ services:
     build: ./service-1
     image: orders-service-1
     ports:
-      - "8081:8081"
+      - "8001:8001"
     depends_on:
       postgres-orders-service-1:
         condition: service_healthy
@@ -31,7 +31,7 @@ services:
     build: ./service-2
     image: products-service-2
     ports:
-      - "8082:8082"
+      - "8002:8002"
     depends_on:
       postgres-products-service-2:
         condition: service_healthy
@@ -136,6 +136,24 @@ services:
     networks:
       - app-network
 
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.3.1
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    depends_on:
+      - kafka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081/subjects" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     ports:
@@ -145,6 +163,7 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
     depends_on:
       - kafka
+      - schema-registry
     networks:
       - app-network
 

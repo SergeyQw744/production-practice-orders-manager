@@ -30,15 +30,18 @@ spring:
     consumer:
       group-id: products-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       properties:
+        schema.registry.url: http://schema-registry:8081
+        auto.register.schemas: true
+        specific.avro.reader: true
         spring:
           json:
             trusted:
               packages: "*"
 
 server:
-  port: 8081
+  port: 8002
 
 management:
   # Включаем трейсинг

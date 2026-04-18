@@ -29,10 +29,14 @@ spring:
     bootstrap-servers: kafka:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        schema.registry.url: http://schema-registry:8081
+        auto.register.schemas: true
+        specific.avro.reader: true
 
 server:
-  port: 8081
+  port: 8001
 
 management:
   # Включаем трейсинг
