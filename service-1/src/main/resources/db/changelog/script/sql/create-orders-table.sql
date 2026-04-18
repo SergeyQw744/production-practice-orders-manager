@@ -1,0 +1,7 @@
+CREATE TABLE orders (
+    id_order UUID PRIMARY KEY,
+    id_product VARCHAR(255) NOT NULL,
+    count INTEGER NOT NULL,
+    id_user VARCHAR(255) NOT NULL,
+    date_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
