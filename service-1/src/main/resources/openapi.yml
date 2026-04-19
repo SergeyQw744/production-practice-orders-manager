@@ -6,7 +6,7 @@ info:
 components:
   schemas:
     OrderReservationRequest:
-      type: Object
+      type: object
       required:
         - idProduct
         - count
@@ -25,6 +25,8 @@ components:
 
     OrderReservationResponse:
       type: object
+      required:
+        - status
       properties:
         status:
           $ref: '#/components/schemas/ReservationStatus'
@@ -36,4 +38,22 @@ components:
         - fail
       description: Статус обработки запроса на резервирование
 
-paths: {}
+paths:
+  /orders/reserve:
+    post:
+      operationId: reserveOrder
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderReservationRequest'
+      responses:
+        '200':
+          description: Успешное резервирование
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderReservationResponse'
