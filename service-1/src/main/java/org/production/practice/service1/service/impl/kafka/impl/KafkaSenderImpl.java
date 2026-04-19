@@ -1,9 +1,9 @@
-package org.production.practice.service1.service.impl;
+package org.production.practice.service1.service.impl.kafka.impl;
 
 import com.example.kafka.avro.ReservationOrderEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.production.practice.service1.service.KafkaSender;
+import org.production.practice.service1.service.impl.kafka.KafkaSender;
 import org.production.practice.service1.util.KafkaSendException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
