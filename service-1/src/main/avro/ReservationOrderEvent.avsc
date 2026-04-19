@@ -4,17 +4,9 @@
   "namespace": "com.example.kafka.avro",
   "fields": [
     {
-      "name": "idOrder",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      },
-      "doc": "Уникальный идентификатор заказа"
-    },
-    {
       "name": "idProduct",
       "type": "string",
-      "doc": "Идентификатор продукта"
+      "doc": "Идентификатор товара"
     },
     {
       "name": "count",

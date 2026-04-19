@@ -30,8 +30,8 @@ public class KafkaSenderImpl implements KafkaSender {
                     sendResult.getRecordMetadata().offset()
             );
         } catch (Exception e) {
-            log.error("Ошибка при отправке информации о резервировании товара {}", event.getIdOrder());
-            throw new KafkaSendException("Fail: send message about order %s to Kafka".formatted(event.getIdOrder()));
+            log.error("Ошибка при отправке информации о резервировании товара {}", event.getIdProduct());
+            throw new KafkaSendException("Fail: send message about order %s to Kafka".formatted(event.getIdProduct()));
         }
     }
 }

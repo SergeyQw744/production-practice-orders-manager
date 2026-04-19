@@ -1,0 +1,39 @@
+openapi: 3.0.1
+info:
+  title: Order API
+  version: 1.0.0
+
+components:
+  schemas:
+    OrderReservationRequest:
+      type: Object
+      required:
+        - idProduct
+        - count
+        - idUser
+      properties:
+        idProduct:
+          type: string
+          description: Идентификатор товара
+        count:
+          type: integer
+          description: Количество товара для резервирования
+          minimum: 1
+        idUser:
+          type: string
+          description: Идентификатор пользователя
+
+    OrderReservationResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ReservationStatus'
+
+    ReservationStatus:
+      type: string
+      enum:
+        - success
+        - fail
+      description: Статус обработки запроса на резервирование
+
+paths: {}
