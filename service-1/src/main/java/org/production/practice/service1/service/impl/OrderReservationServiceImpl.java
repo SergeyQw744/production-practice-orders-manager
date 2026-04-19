@@ -9,7 +9,7 @@ import org.production.practice.service1.mapper.OrderMapper;
 import org.production.practice.service1.model.Order;
 import org.production.practice.service1.repository.OrderRepository;
 import org.production.practice.service1.service.OrderReservationService;
-import org.production.practice.service1.service.impl.kafka.KafkaSender;
+import org.production.practice.service1.service.kafka.KafkaSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

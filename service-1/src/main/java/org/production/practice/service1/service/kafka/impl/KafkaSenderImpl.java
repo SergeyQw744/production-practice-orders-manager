@@ -1,9 +1,9 @@
-package org.production.practice.service1.service.impl.kafka.impl;
+package org.production.practice.service1.service.kafka.impl;
 
 import com.example.kafka.avro.ReservationOrderEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.production.practice.service1.service.impl.kafka.KafkaSender;
+import org.production.practice.service1.service.kafka.KafkaSender;
 import org.production.practice.service1.util.KafkaSendException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,7 +19,7 @@ public class KafkaSenderImpl implements KafkaSender {
     private final KafkaTemplate<String, ReservationOrderEvent> kafkaTemplate;
 
     @Value("${app.kafka.topic}")
-    private final String reservationTopic;
+    private String reservationTopic;
 
     @Override
     public void sendReservationOrderEvent(ReservationOrderEvent event) {

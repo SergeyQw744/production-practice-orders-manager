@@ -1,4 +1,4 @@
-package org.production.practice.service1.service.impl.kafka;
+package org.production.practice.service1.service.kafka;
 
 import com.example.kafka.avro.ReservationOrderEvent;
 
