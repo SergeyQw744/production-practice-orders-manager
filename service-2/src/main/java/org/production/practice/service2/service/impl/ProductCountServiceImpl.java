@@ -28,6 +28,6 @@ public class ProductCountServiceImpl implements ProductCountService {
                 });
         int reducedCount = product.getCount() - count;
         product.setCount(reducedCount);
-        log.info("Количество товара id={} успешно изменено", id);
+        log.info("Количество товара id={} успешно изменено: было {}, стало {}", id, product.getCount(), reducedCount);
     }
 }

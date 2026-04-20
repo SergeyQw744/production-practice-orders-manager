@@ -31,6 +31,8 @@ spring:
       group-id: products-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      enable-auto-commit: false
+      auto-offset-reset: earliest
       properties:
         schema.registry.url: http://schema-registry:8081
         auto.register.schemas: true
@@ -38,10 +40,17 @@ spring:
         spring:
           json:
             trusted:
-              packages: "*"
+              packages: "com.example.kafka.avro"
 
 server:
   port: 8002
+
+app:
+  kafka:
+    topics:
+      reservation-topic: reservation-order-topic
+    consumer:
+      group-id: reservation-order-group
 
 management:
   # Включаем трейсинг
