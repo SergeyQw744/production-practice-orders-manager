@@ -26,8 +26,9 @@ public class ProductCountServiceImpl implements ProductCountService {
                     log.error("Товар id={} не найден", id);
                     return new EntityNotFoundException("Товар не обнаружен на складе");
                 });
-        int reducedCount = product.getCount() - count;
+        int oldCount = product.getCount();
+        int reducedCount = oldCount - count;
         product.setCount(reducedCount);
-        log.info("Количество товара id={} успешно изменено: было {}, стало {}", id, product.getCount(), reducedCount);
+        log.info("Количество товара id={} успешно изменено: было {}, стало {}", id, oldCount, reducedCount);
     }
 }

@@ -19,8 +19,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Product {
     @Id
-    @Column(length = 255, nullable = false)
-    private UUID id;
+    @Column(name = "id_product", length = 255, nullable = false)
+    private UUID idProduct;
 
     @Column(length = 255, nullable = false)
     private String name;
