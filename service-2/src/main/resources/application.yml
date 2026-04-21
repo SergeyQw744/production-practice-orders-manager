@@ -47,9 +47,9 @@ server:
 
 app:
   kafka:
-    topics:
-      reservation-topic: reservation-order-topic
     consumer:
+      topics:
+        reservation-topic: reservation-order-topic
       group-id: reservation-order-group
 
 management:

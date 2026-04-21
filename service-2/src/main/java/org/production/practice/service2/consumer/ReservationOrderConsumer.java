@@ -18,7 +18,7 @@ public class ReservationOrderConsumer {
 
     private final EventProcessor eventProcessor;
 
-    @KafkaListener(topics = "${app.kafka.topics.reservation-topic}", groupId = "${app.kafka.group-id.consumer}")
+    @KafkaListener(topics = "${app.kafka.consumer.topics.reservation-topic}", groupId = "${app.kafka.consumer.group-id}")
     public void handle(
             @Payload ReservationOrderEvent event,
             @Header(KafkaHeaders.TOPIC) String topic, Acknowledgment ack
