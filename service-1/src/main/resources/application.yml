@@ -64,6 +64,10 @@ management:
         exposure:
           include: health,info,prometheus
 
+app:
+  kafka:
+    topic: reservation-order-topic
+
 logging:
   level:
     io.opentelemetry: DEBUG
