@@ -1,6 +1,7 @@
 package org.production.practice.service1.service.impl;
 
 import com.example.kafka.avro.ReservationOrderEvent;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.production.practice.model.dto.OrderReservationRequest;
@@ -26,6 +27,7 @@ public class OrderReservationServiceImpl implements OrderReservationService {
 
     @Override
     @Transactional
+    @Observed(name = "order.reserve", contextualName = "reserve-order")
     public ReservationStatus reserveOrder(OrderReservationRequest request) {
         try {
             ReservationOrderEvent event = orderMapper.requestToKafkaEvent(request);
