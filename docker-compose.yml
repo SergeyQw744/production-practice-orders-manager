@@ -18,10 +18,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-orders-service-1:5432/orders-service-1-db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
-      MANAGEMENT_METRICS_EXPORT_OTLP_ENABLED: "false"
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://jaeger:4318/v1/traces
+#      OTEL_EXPORTER_OTLP_METRICS_ENABLED: "false"
       OTEL_METRICS_EXPORTER: none
+#      OTEL_EXPORTER_OTLP_LOGS_ENABLED: "false"
       OTEL_SERVICE_NAME: orders-service-1
+      OTEL_PROPAGATORS: tracecontext,baggage
     working_dir: /app
     networks:
       - app-network
@@ -43,10 +45,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-products-service-2:5432/products-service-2-db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
-      MANAGEMENT_METRICS_EXPORT_OTLP_ENABLED: "false"
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://jaeger:4318/v1/traces
+      OTEL_EXPORTER_OTLP_METRICS_ENABLED: "false"
       OTEL_METRICS_EXPORTER: none
+      OTEL_EXPORTER_OTLP_LOGS_ENABLED: "false"
       OTEL_SERVICE_NAME: products-service-2
+      OTEL_PROPAGATORS: tracecontext,baggage
     working_dir: /app
     networks:
       - app-network

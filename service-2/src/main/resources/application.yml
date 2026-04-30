@@ -27,10 +27,14 @@ spring:
   # Kafka consumer
   kafka:
     bootstrap-servers: kafka:9092
+    listener:
+      ack-mode: manual
     consumer:
       group-id: products-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      enable-auto-commit: false
+      auto-offset-reset: earliest
       properties:
         schema.registry.url: http://schema-registry:8081
         auto.register.schemas: true
@@ -38,39 +42,55 @@ spring:
         spring:
           json:
             trusted:
-              packages: "*"
+              packages: "com.example.kafka.avro"
 
 server:
   port: 8002
 
+app:
+  kafka:
+    consumer:
+      topics:
+        reservation-topic: reservation-order-topic
+      group-id: reservation-order-group
+
 management:
-  # Включаем трейсинг
   tracing:
     enabled: true
     sampling:
-      probability: 1.0  # 1.0 = 100% запросов, 0.1 = 10%
+      probability: 1.0
+    baggage:
+      remote-fields: traceparent,tracestate
+    propagation:
+      type: w3c
 
-  # Настройки OTLP-экспортера
-  otlp:
+  otlp:  # ← otlp на одном уровне с tracing!
     tracing:
       endpoint: http://jaeger:4318/v1/traces
-    metrics:
-      endpoint: http://jaeger:4318/v1/metrics
 
-  # Экспорт метрик
   metrics:
     export:
       otlp:
-        enabled: true
+        enabled: false
 
-    # Открываем endpoint для проверки метрик (опционально)
-    endpoints:
-      web:
-        exposure:
-          include: health,info,prometheus
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
 
 logging:
   level:
+    # OpenTelemetry отладка
     io.opentelemetry: DEBUG
-    io.micrometer: DEBUG
-    io.opentelemetry.exporter: TRACE
+    io.opentelemetry.exporter: DEBUG
+    io.opentelemetry.sdk: DEBUG
+
+    # Micrometer Tracing отладка
+    io.micrometer.tracing: DEBUG
+    io.micrometer.tracing.otel: DEBUG
+
+    # Kafka propagation отладка
+    org.springframework.kafka: DEBUG
+
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [traceId=%X{traceId:-}, spanId=%X{spanId:-}] - %msg%n'

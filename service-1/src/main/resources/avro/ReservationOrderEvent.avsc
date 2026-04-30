@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "ReservationOrderEvent",
+  "namespace": "com.example.kafka.avro",
+  "fields": [
+    {
+      "name": "idProduct",
+      "type": "string",
+      "doc": "Идентификатор товара"
+    },
+    {
+      "name": "count",
+      "type": "int",
+      "doc": "Количество товара"
+    }
+  ]
+}
